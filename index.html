@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CS109a - Final Project</title>
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="row">
+	<div class="col-md-12 text1" id="title"><center>Restaurant recommendations - CS109a Final Project - Paul von Chamier, Maciej Holubiec, Jimena Romero</center></div>
+</div>
+<div class="row intro">
+	<div class="col-md-12"><a id="link1"><img class="tile tile1" width = 440 src="img/tile1.png"/></a><div id="tile1about">Key facts on the project</div>
+	<a id="link2"><img class="tile tile2" width = 440 src="img/tile2.png"/></a><div id="tile2about">Baseline models</div>
+	<a id="link3"><img class="tile tile3" width = 440 src="img/tile3.jpg"/></a><div id="tile3about">Matrix Factorization models</div>
+</div>
+	<div class="col-md-12" id="clickonthetiles">Click on the tiles above to explore different aspects of our project.</div>
+	<div class="col-md-12" id="navigation">Yelp (www.yelp.com) has offered their data to students around the world as part of a data science competition. Based on that dataset we built a few models to <br> predict people's recommendations based on theirs and restaurants' characterstics. Click on the tiles above to explore the results of our project. </div>
+</div>
+<div class="row facts">
+	<div class="col-md-6">
+		<div class="titlefacts1"><center>Key facts on the dataset</center></div>
+		<img width = 495 id="descr" src="img/descr.png"/>
+		<img width = 495 id="descr2" src="img/descr2.png"/>
+	</div>
+	<div class="col-md-6">
+		<div class="titlefacts2"><center>Key facts on the project</center></div>
+		<img width = 450 id="descr3" src="img/descr3.png"/>
+		<div id="summary">We built predictive models, aiming at estimating people's potential recommendations (the number of stars given) based on theirs and a given restaurant's characterstics. Our main measurement of success was the Root Mean Square Error, which represents the average amount of stars we were "off" the actual recommendations.
+			<br><br>1. We first built a simple model which predicted the average recommendation (~3.6) for every single review given. This gave us the RMSE of 0.76. <br>
+		<br>2. The next step was the Lasso Regression Model. The model was assessing deviation from the global average recommendation for every reviewer (e.g. if they were harsh reviewers the would be assigned a negative deviation by the model while predicting). The same deviation weights were applied to the restuarants. (e.g. restaurants with expectionally good reviews were given an upward deviation while predicting). We split the dataset into a train and test group and applied 5-prong Cross Validation to establish the best regularization factor. It turned out to be 0.00100. With such a model our RMSE was 0.98.
+		<br><br>3. Finally we applied the matrix factorization model. For each restaurant we took K-nearest neighbor restaurants (geographically) and compared them pair-wise with the restaurant in question, thus establishing another dimension of modifying the recommendation prediction per restaurant, this time around based on a local comparison. This method yielded the RMSE of 0.93 and 0.87 (The latter being an ensamble of two Matrix Factorization models).</div>
+	</div>
+</div>
+<div class="row about"><div class="col-md-12">
+	<a id="link4"><div class="goback2"><div align="center" class="gobacky2">Click here to go back to the top.</div></div></a>
+	<a id="link5"><div class="goback3"><div align="center" class="gobacky3">Click here to explore the baseline models.</div></div></a>
+</div>
+</div>
+<div class="row facts">
+	<div class="col-md-6">
+		<div id="titlefacts3"><center>Mean imputation model</center></div>
+		<div id="summary2">For the mean imputation model, we specified the row and column mean and imputed them for across the dataset. Such a technique yielded an RMSE of 0.76. Below we present our process.</div>
+		<img width = 530 id="descr6" src="img/descr6.png"/>
+	</div>
+
+	<div class="col-md-6">
+		<div id="titlefacts4"><center>Lasso regression model</center></div>
+		<div id="summary3">For the Lasso regression model as well as the Matrix Factorization model we used the following technique. We split the dataset into the train and test. We prepared our models using the train dataset and then verified their quality on the test dataset using the method called 5-prong Cross Validation.(Which addressed the risk of overfitting).</div>
+		<img width = 320 id="descr4" src="img/descr4.png"/>
+		<div id="summary4">We then applied the the model, getting the following results of RMSE for the test dataset. The optimal parameter yielded the RMSE of 0.98 .</div>
+		<img width = 430 id="descr5" src="img/descr5.png"/>
+	</div>
+
+</div>
+<a id="link6"><div class="goback4"><div align="center" class="gobacky4">Click here to go back to the top.</div></div></a>
+<a id="link7"><div class="goback5"><div align="center" class="gobacky5">Click here for the Matrix factorization.</div></div></a>
+<div class="row">
+	<div class="col-md-6">
+		<div id="summary6">Matrix Factorization belongs to one of two main strategies in recommender systems: collaborative filtering. In general, recommender systems are based either on content filtering (creates a profile for each user or product to characterize its nature), or collaborative filtering (relies only on past user behavior without requiring the creation of explicit profiles and analyzes relationships between users and interdependencies among products to identify new user-item associations). On its own, collaborative filtering has two main areas: neighborhood methods and latent factor models. Neighborhood methods focus on relationships between items or, alternatively, between users, while latent factor models focus on characterizing both items and users. In other words, latent factor models transforms both items and users to the same latent factor space. This latent space tries to explain ratings by characterizing both products and users on factors automatically inferred from user feedback. In this area, Matrix Factorization is one of the most popular methods.
+			A matrix factorization can be performed with a singular value decomposition (SVD) on the ratings matrix (using SGD or ALS and regularizing the weights of the factors). Matrix factorization is particularly advantageous because it allows the incorporation of additional information. For instance, when explicit feedback is not available (ie. direct ratings on a business), one can infer user’s preferences using implicit feedback by observing behavior like purchase history, search patterns, etc.
+			Some SVD-inspired methods for matrix factorization include: i) Standard SVD (you can dot product the user’s vectors with the movies or business’ vectors to predict each individual rating); ii) Asymmetric SVD (instead of users having their own notion of factor vectors, we can represent users as a bag of items they have rated); iii) SVD++ (incorporates both the standard SVD and the asymmetric SVD model by representing users both by their own factor representation and as a bag of item vectors). For purposes of this project, we will focus on the Standard SVD.
+		</div>
+		<img width = 320 id="descr7" src="img/descr7.png"/>
+	</div>
+
+	<div class="col-md-6">
+		<div id="summary7">The matrix factorization was done with the residuals from the regularization regression. We predicted the residuals iterating the parameters of ALS (n_iterations), learning rate (lambda) and number of latent factors (n_factors). With the residuals, we estimated the final rating per review. Our final RMSE was 0.87, less than the RMSE from the baseline regression and form the sample average.
+		</div>
+		<img width = 430 id="descr8" src="img/descr8.png"/>
+	</div>
+
+</div>
+<div class="row"><div class="col-md-12 footnote" id="footnote"><a id="link8"><div class="goback"><center align="middle" class="gobacky">Click here to go back to the top.</center></middle></div></a>
+	<div class="fixed-rectangle"></div><div class="credits">All the data were provided by Yelp <p></p><p></p></div>
+</div>
+	<!--
+
+		MALARIA
+			- Information
+			- Choropleth 
+			- Implementation of own sketch or tree visualization
+
+	-->
+
+	<!-- Load JS libraries -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/queue.min.js"></script>
+	<script src="js/topojson.js"></script>
+	<script src="js/d3.min.js"></script>
+	<script src="js/main.js"></script>
+
+
+
+</body>
+</html>
